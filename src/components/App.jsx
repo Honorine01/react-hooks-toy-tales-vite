@@ -43,7 +43,22 @@ function App() {
       })
       .catch((error) => console.error("Error adding toy:", error));
   }
+// Delete a toy from the database
+function handleDonate(id) {
+  fetch(`http://localhost:3001/toys/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to delete toy");
+      }
 
+      setToys((currentToys) =>
+        currentToys.filter((toy) => toy.id !== id)
+      );
+    })
+    .catch((error) => console.error("Error deleting toy:", error));
+}
   return (
     <>
       <Header />
@@ -54,7 +69,7 @@ function App() {
         <button onClick={handleClick}>Add a Toy</button>
       </div>
 
-      <ToyContainer toys={toys} />
+      <ToyContainer toys={toys} onDonate={handleDonate} />
     </>
   );
 }
