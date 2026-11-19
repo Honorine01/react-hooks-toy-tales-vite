@@ -27,3 +27,10 @@ yarn-error.log*
 
 # Ignore ESLint files
 .eslintcache
+
+# Local environment variables
+.env
+.env.*
+
+# Vite
+/dist
