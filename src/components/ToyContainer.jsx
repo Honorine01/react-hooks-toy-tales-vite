@@ -1,7 +1,7 @@
 import React from "react";
 import ToyCard from "./ToyCard";
 
-function ToyContainer({ toys, onDonate }) {
+function ToyContainer({ toys, onDonate, onLike }) {
   return (
     <div id="toy-collection">
       {toys.map((toy) => (
@@ -9,6 +9,7 @@ function ToyContainer({ toys, onDonate }) {
           key={toy.id}
           toy={toy}
           onDonate={onDonate}
+          onLike={onLike}
         />
       ))}
     </div>

@@ -59,6 +59,34 @@ function handleDonate(id) {
     })
     .catch((error) => console.error("Error deleting toy:", error));
 }
+// Increase a toy's likes
+function handleLike(id) {
+  const toy = toys.find((toy) => toy.id === id);
+
+  fetch(`http://localhost:3001/toys/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      likes: toy.likes + 1,
+    }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to like toy");
+      }
+      return response.json();
+    })
+    .then((updatedToy) => {
+      setToys((currentToys) =>
+        currentToys.map((toy) =>
+          toy.id === id ? updatedToy : toy
+        )
+      );
+    })
+    .catch((error) => console.error("Error liking toy:", error));
+}
   return (
     <>
       <Header />
@@ -69,7 +97,7 @@ function handleDonate(id) {
         <button onClick={handleClick}>Add a Toy</button>
       </div>
 
-      <ToyContainer toys={toys} onDonate={handleDonate} />
+      <ToyContainer toys={toys} onDonate={handleDonate} onLike={handleLike} />
     </>
   );
 }
